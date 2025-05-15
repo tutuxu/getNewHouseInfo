@@ -1,10 +1,12 @@
 import ctypes
+import json
 import smtplib
 from email.utils import formataddr
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from curl_cffi import requests
 import time
+import os
 
 # 定义存储已处理房源信息的文件路径
 PROCESSED_HOUSES_FILE = "processed_houses.json"
@@ -36,7 +38,7 @@ def send_email(mail_content):
 	msgAtt.attach(msg)
 	msg['Subject'] = mail_title 
 	msg['From'] = formataddr(pair=(senderName, sender)) 
-	msg['To'] = touser
+	msg['To'] = tousers
 	smtp = smtplib.SMTP_SSL(host_server,465)
 	smtp.login(sender, code)
 	for touser in tousers:
@@ -110,7 +112,7 @@ def get_items(price_max):
 				}
 
 			# 检查是否为新房源
-			if new_houst not in processed_houses:
+			if new_house not in processed_houses:
 				house_items.append(new_house)
 				processed_houses.append(new_house)
 				save_processed_houses(processed_houses)  # 保存已处理的房源信息到文件中
