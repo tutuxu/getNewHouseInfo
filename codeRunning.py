@@ -123,7 +123,7 @@ def get_items(price_max):
 		send_email(mail_content)
 
 def main():
-	price_max = 10000
+	price_max = 1100
 
 	ES_CONTINUOUS = 0x80000000
 	ES_SYSTEM_REQUIRED = 0x00000001
