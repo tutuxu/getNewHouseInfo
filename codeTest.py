@@ -123,7 +123,7 @@ def get_items(price_max):
 		send_email(mail_content)
 
 def main():
-	price_max = 1100
+	price_max = 6000
 
 	ES_CONTINUOUS = 0x80000000
 	ES_SYSTEM_REQUIRED = 0x00000001
@@ -138,13 +138,6 @@ def main():
 			send_email(f"程序出错，请检查:{e}")
 		ctypes.windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED)
 		time.sleep(20)
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
