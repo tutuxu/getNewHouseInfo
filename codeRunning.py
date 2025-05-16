@@ -31,22 +31,23 @@ def send_email(tousers,mail_content):
 	
 	host_server = 'smtp.qq.com'
 	sender = '1796170111@qq.com'
-	code='vmvljmrgzrqibfij'
+	code='ibfyjxpcjlovbcfb'
 
-	msg = MIMEText(mail_content, _subtype='plain', _charset='utf-8')
-	msg['Accept-Language'] = 'zh-CN'
-	msg['Accept-Charset'] = 'ISO-8859-1,utf-8'
-	msgAtt = MIMEMultipart()
-	msgAtt.attach(msg)
-	msg['Subject'] = mail_title 
-	msg['From'] = formataddr(pair=(senderName, sender)) 
-
-	smtp = smtplib.SMTP_SSL(host_server,465)
-	smtp.login(sender, code)
 	for touser in tousers:
+		msg = MIMEText(mail_content, _subtype='plain', _charset='utf-8')
+		msg['Accept-Language'] = 'zh-CN'
+		msg['Accept-Charset'] = 'ISO-8859-1,utf-8'
+		msgAtt = MIMEMultipart()
+		msgAtt.attach(msg)
+		msg['Subject'] = mail_title 
+		msg['From'] = formataddr(pair=(senderName, sender)) 
+
+		smtp = smtplib.SMTP_SSL(host_server,465)
+		smtp.login(sender, code)
 		msg['To'] = touser
 		smtp.sendmail(sender, touser, msg.as_string())
-	print(mail_title,f"send mail to {touser} sucess！")
+		print(mail_title,f"send mail to {touser} sucess！")
+
 	smtp.quit()
 	return
 
@@ -123,9 +124,10 @@ def get_items(price_max):
 					print("find new house:", new_house)
 
 		if house_items:
+			# 客户QQ邮箱39664269@qq.com
 			send_email(['3552144578@qq.com','39664269@qq.com'],mail_content)
 	except requests.exceptions.Timeout:
-		send_email(['1796170111@qq.com'],f'time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),"请求超时"')
+		send_email(['3552144578@qq.com'],f'time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),"请求超时"')
 		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),"请求超时")
 		return
 	except Exception as e:
@@ -133,7 +135,7 @@ def get_items(price_max):
 		send_email(['3552144578@qq.com'],f"程序出错，请检查:{e}")
 
 def main():
-	price_max = 9999
+	price_max = 1200
 
 	ES_CONTINUOUS = 0x80000000
 	ES_SYSTEM_REQUIRED = 0x00000001
@@ -145,7 +147,7 @@ def main():
 			get_items(price_max)
 		except Exception as e:
 			print(f"程序出错，请检查:{e}")
-			send_email(['1796170111@qq.com'],f"程序出错，请检查:{e}")
+			send_email(['3552144578@qq.com'],f"程序出错，请检查:{e}")
 		ctypes.windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED)
 		time.sleep(20)
 
