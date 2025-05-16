@@ -26,24 +26,31 @@ def save_processed_houses(houses):
 def send_email(tousers,mail_content):
 	mail_title = 'find new house'
 	senderName = "myself"
-	tousers = ['3552144578@qq.com']
+	# tourser = '39664269@qq.com'
+	
 	host_server = 'smtp.qq.com'
 	sender = '1796170111@qq.com'
-	code='vmvljmrgzrqibfij'
+	code='ibfyjxpcjlovbcfb'
 
-	msg = MIMEText(mail_content, _subtype='plain', _charset='utf-8')
-	msg['Accept-Language'] = 'zh-CN'
-	msg['Accept-Charset'] = 'ISO-8859-1,utf-8'
-	msgAtt = MIMEMultipart()
-	msgAtt.attach(msg)
-	msg['Subject'] = mail_title 
-	msg['From'] = formataddr(pair=(senderName, sender)) 
-	smtp = smtplib.SMTP_SSL(host_server,465)
-	smtp.login(sender, code)
 	for touser in tousers:
+		msg = MIMEText(mail_content, _subtype='plain', _charset='utf-8')
+		msg['Accept-Language'] = 'zh-CN'
+		msg['Accept-Charset'] = 'ISO-8859-1,utf-8'
+		msgAtt = MIMEMultipart()
+		msgAtt.attach(msg)
+		msg['Subject'] = mail_title 
+		msg['From'] = formataddr(pair=(senderName, sender)) 
+		smtp = smtplib.SMTP_SSL(host_server,465)
+		smtp.login(sender, code)
 		msg['To'] = touser
 		smtp.sendmail(sender, touser, msg.as_string())
-	print(mail_title,f"send mail to {touser} sucess！")
+		print(mail_title,f"send mail to {touser} sucess！")
+	
+	# for touser in tousers:
+	# 	print(f'send mail to {touser}')
+	# 	msg['To'] = touser
+	# 	smtp.sendmail(sender, touser, msg.as_string())
+	# 	print(mail_title,f"send mail to {touser} sucess！")
 	smtp.quit()
 	return
 
@@ -120,12 +127,12 @@ def get_items(price_max):
 					print("find new house:", new_house)
 
 		if house_items:
-			send_email(['3552144578@qq.com','1796170111@qq.com'],mail_content)
+			send_email(['3552144578@qq.com','2875049136@qq.com'],mail_content)
 	except requests.exceptions.Timeout:
 		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " 请求超时，请检查网络连接。")
 	except Exception as e:
 		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " 程序出错，请检查:", e)
-		send_email(['1796170111@qq.com'],f"程序出错，请检查:{e}")
+		send_email(['3552144578@qq.com'],f"程序出错，请检查:{e}")
 
 def main():
 	price_max = 99999
@@ -140,7 +147,7 @@ def main():
 			get_items(price_max)
 		except Exception as e:
 			print(f"程序出错，请检查:{e}")
-			send_email(['1796170111@qq.com'],f"程序出错，请检查:{e}")
+			send_email(['3552144578@qq.com'],f"程序出错，请检查:{e}")
 		ctypes.windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED)
 		time.sleep(20)
 
