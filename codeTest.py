@@ -123,16 +123,20 @@ def get_items(price_max):
 					house_items.append(new_house)
 					processed_houses.append(new_house)
 					save_processed_houses(processed_houses)  # 保存已处理的房源信息到文件中
-					mail_content += f"name:{new_house['name']},basic_rent:{new_house['basic_rent']},living_area:{new_house['living_area']},url:{new_house['url']}\n"
+					mail_content += "testFind:" f"name:{new_house['name']}, basic_rent:{new_house['basic_rent']},living_area:{new_house['living_area']},url:{new_house['url']}\n"
 					print("find new house:", new_house)
+
 
 		if house_items:
 			send_email(['3552144578@qq.com','2875049136@qq.com'],mail_content)
 	except requests.exceptions.Timeout:
+		errorInfo = "testError:" +time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " 请求超时，请检查网络连接。"
 		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " 请求超时，请检查网络连接。")
+		sned_email(['3552144578@qq.com'],errorInfo)
 	except Exception as e:
-		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " 程序出错，请检查:", e)
-		send_email(['3552144578@qq.com'],f"程序出错，请检查:{e}")
+		errorInfo = "TestError:" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " 程序出错，请检查:" + f"{e}"
+		print(errorInfo)
+		send_email(['3552144578@qq.com'],errorInfo)
 
 def main():
 	price_max = 99999
@@ -147,7 +151,7 @@ def main():
 			get_items(price_max)
 		except Exception as e:
 			print(f"程序出错，请检查:{e}")
-			send_email(['3552144578@qq.com'],f"程序出错，请检查:{e}")
+			send_email(['3552144578@qq.com'],"TestError: " f"程序出错，请检查:{e}")
 		ctypes.windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED)
 		time.sleep(20)
 
