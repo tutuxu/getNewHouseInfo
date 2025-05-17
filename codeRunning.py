@@ -127,8 +127,10 @@ def get_items(price_max):
 			# 客户QQ邮箱39664269@qq.com
 			send_email(['3552144578@qq.com','39664269@qq.com'],mail_content)
 	except requests.exceptions.Timeout:
-		send_email(['3552144578@qq.com'],f'time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),"请求超时"')
-		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),"请求超时")
+		errorInfo = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " 本次请求超时"
+		print(errorInfo)
+
+		send_email(['3552144578@qq.com'],errorInfo)
 		return
 	except Exception as e:
 		print(f"程序出错，请检查:{e}")
